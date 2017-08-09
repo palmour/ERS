@@ -154,6 +154,15 @@ begin
 	from ERS_USERS where U_USERNAME = uname2 and U_PASSWORD = upass2;
 end;
 /
+﻿create or replace procedure P_GET_USER_INFO_FROM_PASSWORD(uname in varchar2, upass in varchar2, 
+uids out number, fname out varchar2, lname out varchar2, email out varchar2, urid out varchar2)
+as
+begin
+	select U_ID, U_FIRSTNAME, U_LASTNAME, U_EMAIL, UR_ID
+	into uids, fname, lname, email, urid
+	from ERS_USERS where U_USERNAME = uname and U_PASSWORD = upass;
+end;
+/
 
 
 

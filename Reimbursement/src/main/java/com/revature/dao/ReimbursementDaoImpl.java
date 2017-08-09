@@ -45,7 +45,8 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 	}
 
 	
-	
+	// implemented
+	// this login returns true or false;
 	@Override
 	public boolean LoginIn(String us, String pw) {
 		Employee temp = new Employee();
@@ -74,6 +75,40 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 		}
 		
 		return false;
+	}
+
+
+	// implemented
+	// this login returns user info for current user
+	// that's if their info does match our info
+	@Override
+	public Employee LoginIn2(String us, String pw) {
+		Employee temp = new Employee();
+		CallableStatement cs = null;
+		try(Connection conn = ConnectionUtil.getConnectionProp()){
+			String sql = "{CALL P_GET_USER_INFO_FROM_PASSWORD( ?, ?, ?, ?, ?, ?, ?)}";
+			cs = conn.prepareCall(sql);
+			cs.setString(1, us);
+			cs.setString(2, pw);
+			cs.registerOutParameter(3, Types.INTEGER);
+			cs.registerOutParameter(4, Types.VARCHAR);
+			cs.registerOutParameter(5, Types.VARCHAR);
+			cs.registerOutParameter(6, Types.VARCHAR);
+			cs.registerOutParameter(7, Types.INTEGER);
+			cs.execute();
+			temp.setU_ID(cs.getInt(3));
+			temp.setU_USERNAME(us);
+			temp.setU_PASSWORD(pw);
+			temp.setU_FIRSTNAME(cs.getString(4));
+			temp.setU_LASTNAME(cs.getString(5));
+			temp.setU_EMAIL(cs.getString(6));
+			temp.setUR_ID(cs.getInt(7));
+		}catch(SQLException e) {
+			System.out.println("User info does not match our records.");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return temp;
 	}
 	
 	

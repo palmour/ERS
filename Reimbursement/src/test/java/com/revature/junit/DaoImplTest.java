@@ -22,6 +22,7 @@ public class DaoImplTest {
 		assertNotNull(emp.getU_ID());
 	}
 	
+	@Ignore
 	@Test
 	public void CheckLogin() {
 		boolean result;
@@ -33,6 +34,7 @@ public class DaoImplTest {
 		assertTrue(result);
 		
 	}
+	@Ignore
 	@Test
 	public void FailCheckLoginExample() {
 		boolean result;
@@ -44,4 +46,17 @@ public class DaoImplTest {
 		assertTrue(result);
 		
 	}
+	
+	@Test
+	public void CheckLogin2() {
+		Employee temp = new Employee();
+		String us = "erosales";
+		String pw = "pass";
+		System.out.println("Testing to check if user can login.");
+		ReimbursementDaoImpl tester = new ReimbursementDaoImpl();
+		temp = tester.LoginIn2(us, pw);
+		System.out.println(temp);
+		assertNotNull(temp);
+	}
+	
 }
