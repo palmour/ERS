@@ -2,12 +2,15 @@ package com.revature.junit;
 
 import static org.junit.Assert.*;
 
+import java.sql.Blob;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.model.TestTimedOutException;
 
 import com.revature.dao.ReimbursementDaoImpl;
 import com.revature.domain.Employee;
+import com.revature.domain.Reimbursement;
 import com.revature.domain.UserNameAlreadyExist;
 
 public class DaoImplTest {
@@ -46,7 +49,7 @@ public class DaoImplTest {
 		assertTrue(result);
 		
 	}
-	
+	@Ignore
 	@Test
 	public void CheckLogin2() {
 		Employee temp = new Employee();
@@ -57,6 +60,17 @@ public class DaoImplTest {
 		temp = tester.LoginIn2(us, pw);
 		System.out.println(temp);
 		assertNotNull(temp);
+	}
+	@Test
+	public void checkCreateNewReimburse() {
+		Employee current = new Employee();
+		Reimbursement temp = new Reimbursement();
+		ReimbursementDaoImpl dao = new ReimbursementDaoImpl();
+		current = dao.LoginIn2("Ahern", "pass");
+		Blob btemp = null;
+		System.out.println(current);
+		temp = dao.CreateNewReimbursement(60, "I need more money",btemp,  3, current);
+		System.out.println(temp);
 	}
 	
 }

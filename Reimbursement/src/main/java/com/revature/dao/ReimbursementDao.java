@@ -1,6 +1,9 @@
 package com.revature.dao;
 
+import java.sql.Blob;
+
 import com.revature.domain.Employee;
+import com.revature.domain.Reimbursement;
 import com.revature.domain.UserNameAlreadyExist;
 
 public interface ReimbursementDao {
@@ -9,5 +12,9 @@ public interface ReimbursementDao {
 			String lname, String email);
 	public boolean LoginIn(String us, String pw);
 	public Employee LoginIn2(String us, String pw);
+	
+	public Reimbursement CreateNewReimbursement(int amount, String description, Blob receipt, 
+			int ty, Employee emp);
+	
 	
 }
