@@ -32,3 +32,10 @@ body{
 #pagination-div{
     padding-left: 20px;
 }
+
+.badge:hover{
+    background-color: white;
+    color: #666666;
+    transition: 0.4s;
+    cursor: pointer;
+}

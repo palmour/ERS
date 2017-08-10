@@ -20,7 +20,7 @@ function init(){
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
 
-        document.getElementById(formId).style.display = "inline";
+        document.getElementById(formId).style.display = "block";
         e.currentTarget.className += " active"; 
     };
 
