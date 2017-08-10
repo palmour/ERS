@@ -19,14 +19,32 @@
         
         <form>
             <!--Placeholders should be current db values -->
-            <input type="text" class="form-control" value="Username" disabled="true">
-            <input type="text" class="form-control" value="Password" disabled="true">
-            <input type="text" class="form-control" value="First Name" disabled="true">
-            <input type="text" class="form-control" value="Last Name" disabled="true">
-            <input type="email" class="form-control" value="youraddress@email.com" disabled="true">
+            <input type="text" class="form-control field" value="Username" disabled="true">
+            <input type="text" class="form-control field" value="Password" disabled="true">
+            <input type="text" class="form-control field" value="First Name" disabled="true">
+            <input type="text" class="form-control field" value="Last Name" disabled="true">
+            <input type="email" class="form-control field" value="youraddress@email.com" disabled="true">
         </form>
         <div class="container wrapper edit-button-wrapper">
-            <button id="edit-button" type="submit" class="btn btn-default">Edit</button>
+            <button id="edit-button" type="submit" class="btn btn-default" onclick="enableEdit(event)">
+                Edit
+            </button>
+            <button id="save-button" type="submit" class="btn btn-default" onclick="enableEdit(event)">
+                Save
+            </button>
         </div>
     </div>
+    <script>
+        function enableEdit(e){
+            let inputs = document.getElementsByClassName("field");
+            let i;
+            for(i=0; i<inputs.length; i++){
+                inputs[i].disabled=  false;
+            }
+            let editButton = document.getElementById("edit-button");
+            let saveButton = document.getElementById("save-button");
+            editButton.style.display = "none";
+            saveButton.style.display = "block";
+        }
+    </script>
 </html>
