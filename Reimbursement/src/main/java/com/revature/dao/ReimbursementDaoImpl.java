@@ -3,8 +3,12 @@ package com.revature.dao;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.domain.Employee;
 import com.revature.domain.Reimbursement;
@@ -146,8 +150,158 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
 		
 		return temp;
 	}
+
+
 	
+	// return all request ever submitted by the user
+	// either resolved or unresolved
+	@Override
+	public List<Reimbursement> AllReimbursementForUser(Employee emp) {
+		List<Reimbursement> rlist = new ArrayList();
+		CallableStatement cs = null;
+		try(Connection conn = ConnectionUtil.getConnectionProp()){
+			String sql = "SELECT * FROM ERS_REIMBURSEMENTS";
+			cs = conn.prepareCall(sql);
+			ResultSet rs = cs.executeQuery();
+			while(rs.next()) {
+				int uid = emp.getU_ID();
+				int rids = rs.getInt("R_ID");
+				int amount = rs.getInt("R_AMOUNT");
+				String des = rs.getString("R_DESCRIPTION");
+				Blob rreceipt = rs.getBlob("R_RECEIPT");
+				Timestamp rsub = rs.getTimestamp("R_SUBMITTED");
+				Timestamp rreso = rs.getTimestamp("R_RESOLVED");
+				int idreso = rs.getInt("U_ID_RESOLVER");
+				int rttype = rs.getInt("RT_TYPE");
+				int rtstatus = rs.getInt("RT_STATUS");
+				
+				Reimbursement r = new Reimbursement(rids, amount, des, rreceipt, rsub, 
+						rreso, uid, idreso, rttype, rtstatus);
+				rlist.add(r);
+				
+			}
+			rs.close();	
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return rlist;
+	}
 	
-	
+	@Override
+	public List<Reimbursement> AllNewPendingReimbursement(){
+		List<Reimbursement> rlist = new ArrayList();
+		CallableStatement cs = null;
+		try(Connection conn = ConnectionUtil.getConnectionProp()){
+			String sql = "SELECT * FROM ERS_REIMBURSEMENTS WHERE "
+					+ "RT_STATUS = 1 OR RT_STATUS = 2";
+			cs = conn.prepareCall(sql);
+			ResultSet rs = cs.executeQuery();
+			while(rs.next()) {
+				int uid = rs.getInt("U_ID_AUTHOR");
+				int rids = rs.getInt("R_ID");
+				int amount = rs.getInt("R_AMOUNT");
+				String des = rs.getString("R_DESCRIPTION");
+				Blob rreceipt = rs.getBlob("R_RECEIPT");
+				Timestamp rsub = rs.getTimestamp("R_SUBMITTED");
+				Timestamp rreso = rs.getTimestamp("R_RESOLVED");
+				int idreso = rs.getInt("U_ID_RESOLVER");
+				int rttype = rs.getInt("RT_TYPE");
+				int rtstatus = rs.getInt("RT_STATUS");
+				
+				Reimbursement r = new Reimbursement(rids, amount, des, rreceipt, rsub, 
+						rreso, uid, idreso, rttype, rtstatus);
+				rlist.add(r);
+				
+			}
+			rs.close();	
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return rlist;
+		
+	}
+
+
+	@Override
+	public List<Reimbursement> AllApprovedReimbursement() {
+		List<Reimbursement> rlist = new ArrayList();
+		CallableStatement cs = null;
+		try(Connection conn = ConnectionUtil.getConnectionProp()){
+			String sql = "SELECT * FROM ERS_REIMBURSEMENTS WHERE "
+					+ "RT_STATUS = 3";
+			cs = conn.prepareCall(sql);
+			ResultSet rs = cs.executeQuery();
+			while(rs.next()) {
+				int uid = rs.getInt("U_ID_AUTHOR");
+				int rids = rs.getInt("R_ID");
+				int amount = rs.getInt("R_AMOUNT");
+				String des = rs.getString("R_DESCRIPTION");
+				Blob rreceipt = rs.getBlob("R_RECEIPT");
+				Timestamp rsub = rs.getTimestamp("R_SUBMITTED");
+				Timestamp rreso = rs.getTimestamp("R_RESOLVED");
+				int idreso = rs.getInt("U_ID_RESOLVER");
+				int rttype = rs.getInt("RT_TYPE");
+				int rtstatus = rs.getInt("RT_STATUS");
+				
+				Reimbursement r = new Reimbursement(rids, amount, des, rreceipt, rsub, 
+						rreso, uid, idreso, rttype, rtstatus);
+				rlist.add(r);
+				
+			}
+			rs.close();	
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return rlist;
+	}
+
+
+	@Override
+	public List<Employee> AllEmployees() {
+		List<Employee> elist = new ArrayList();
+		CallableStatement cs = null;
+		try(Connection conn = ConnectionUtil.getConnectionProp()){
+			String sql = "SELECT * FROM ERS_USERS";
+			cs = conn.prepareCall(sql);
+			ResultSet rs = cs.executeQuery();
+			while(rs.next()) {
+				int uid = rs.getInt("U_ID");
+				String us = rs.getString("U_USERNAME");
+				String pw = rs.getString("U_PASSWORD");
+				String fname = rs.getString("U_FIRSTNAME");
+				String lname = rs.getString("U_LASTNAME");
+				String email = rs.getString("U_EMAIL");
+				String urid = rs.getString("UR_ID");
+				
+				Employee e = new Employee(uid, us, pw, fname, lname, email, urid);
+				elist.add(e);
+				
+			}rs.close();	
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return elist;
+		
+	}
 
 }
