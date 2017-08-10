@@ -5,7 +5,7 @@ body{
 header{
     /*background-color: #AAAACC;*/
     font-family: Arial, Helvetica, sans-serif;
-    height: 350px;
+    height: 250px;
 }
 
 header h1{
@@ -33,3 +33,16 @@ input.form-control{
 div.tabcontent{
     margin-bottom: 30px;
 }
+
+#create-account-form{
+    display: none;
+}
+
+.tabcontent{
+    width: 50%;
+}
+
+.tabcontent form{
+    width: 100%;
+}
+/*So the forms are going from original size to full width of the div after we hide and display*/
