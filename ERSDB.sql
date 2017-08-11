@@ -146,7 +146,7 @@ begin
 	commit;
 end;
 /
-﻿create or replace procedure P_CHECK_USER_PASSWORD(uname out varchar2, upass out varchar2, 
+ ﻿create or replace procedure P_CHECK_USER_PASSWORD(uname out varchar2, upass out varchar2, 
 uname2 in varchar2, upass2 in varchar2) as
 begin
 	select U_USERNAME, U_PASSWORD
@@ -154,7 +154,7 @@ begin
 	from ERS_USERS where U_USERNAME = uname2 and U_PASSWORD = upass2;
 end;
 /
-﻿create or replace procedure P_GET_USER_INFO_FROM_PASSWORD(uname in varchar2, upass in varchar2, 
+﻿ create or replace procedure P_GET_USER_INFO_FROM_PASSWORD(uname in varchar2, upass in varchar2, 
 uids out number, fname out varchar2, lname out varchar2, email out varchar2, urid out varchar2)
 as
 begin
